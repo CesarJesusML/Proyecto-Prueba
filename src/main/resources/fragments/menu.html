@@ -1,0 +1,56 @@
+<div th:fragment="menu(content)" id="wrapper">
+	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            
+            <div class="sidebar-brand-text mx-3">Gestor de restaurante</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/product">
+                <i class="fas fa-fw fa-hamburger"></i>
+                <span>Productos</span></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/porder">
+                <i class="fas fa-fw fa-shopping-bag"></i>
+                <span>Order de compra</span></a>
+        </li>
+        
+         <li class="nav-item">
+            <a class="nav-link" href="/logout">
+                <i class="fas fa-fw fa-arrow-right"></i>
+                <span>Cerrar Sesión</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+       
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+	<div id="content-wrapper" class="d-flex flex-column">
+		<div  id="content">
+			<div class="container-fluid p-4">
+				<div th:replace="${content}"></div>
+			</div>
+		</div>
+	</div>
+</div>
