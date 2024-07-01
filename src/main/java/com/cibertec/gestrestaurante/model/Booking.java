@@ -2,11 +2,14 @@ package com.cibertec.gestrestaurante.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -39,11 +42,16 @@ public class Booking {
     @Column(nullable = false)
     private boolean state;
     
+	@ManyToOne
+	@Nullable
+	@JoinColumn(name="iduseraprov")
+	User useraprov;
+    
     public Booking() {
 	}
 
 	public Booking(Long id, String name, String email, String phone, String doc, int quantity,
-			LocalDateTime bookingdate, boolean state) {
+			LocalDateTime bookingdate, boolean state, User useraprov) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -52,6 +60,7 @@ public class Booking {
 		this.quantity = quantity;
 		this.bookingdate = bookingdate;
 		this.state = state;
+		this.useraprov = useraprov;
 	}
 
 	public Long getId() {
@@ -117,10 +126,16 @@ public class Booking {
 	public void setState(boolean state) {
 		this.state = state;
 	}
+
+	public User getUseraprov() {
+		return useraprov;
+	}
+
+	public void setUseraprov(User useraprov) {
+		this.useraprov = useraprov;
+	}
     
 
-
-    
     	
     
 }

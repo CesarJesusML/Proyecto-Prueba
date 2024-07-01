@@ -1,6 +1,7 @@
 package com.cibertec.gestrestaurante.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,19 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void delete(Product product) {
 		productRepository.delete(product);
+	}
+
+	@Override
+	public Product getById(Long id) {
+		Optional<Product> productop = productRepository.findById(id);
+		
+		Product product = new Product();
+		if (!productop.isEmpty()) {
+			product = productop.get();
+			
+	    }
+		
+		return product;
 	}
 
 }

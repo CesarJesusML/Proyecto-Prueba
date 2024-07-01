@@ -25,14 +25,18 @@ public class Product {
     @Column(nullable = false)
     private String sku;
     
+    @Column(nullable = false)
+    private boolean state;
+    
     public Product() {
 	}
     
-	public Product(Long id, String name, double price, String sku) {
+	public Product(Long id, String name, double price, String sku, boolean state) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.sku = sku;
+		this.state = state;
 	}
 
 	public Long getId() {
@@ -65,6 +69,14 @@ public class Product {
 
 	public void setSku(String sku) {
 		this.sku = sku;
+	}
+
+	public boolean isState() {
+		return state;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
 	}
     
     

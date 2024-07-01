@@ -3,11 +3,13 @@ package com.cibertec.gestrestaurante.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cibertec.gestrestaurante.model.PurchaseOrder;
 import com.cibertec.gestrestaurante.repository.PurchaseOrderRepository;
 import com.cibertec.gestrestaurante.service.PurchaseOrderService;
 
+@Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 	@Autowired

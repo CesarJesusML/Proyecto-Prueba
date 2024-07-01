@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cibertec.gestrestaurante.model.PurchaseOrder;
 
-public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Integer> {
+public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Long> {
 
 }

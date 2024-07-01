@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<title>Inicio</title>
+	    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div th:replace="../fragments/menu :: menu(~{ :: #content})">
+		<div id="content" class="container">
+            <form th:action="@{/porder/add}"  method="post" th:object="${porder}">
+				<div class="d-flex align-items-center mb-4">
+					<h1 class="h3 mr-3 text-gray-800">Crear orden de compra</h1>
+					<button type="submit" class="btn btn-primary text-sm">Guardar</button>
+				</div>
+				<div class="mt-4 row">
+				  <div class="mb-3 row col-sm-4">
+				    <label for="doc" class="col-sm-4 col-form-label">Documento: </label>
+				    <div class="col-sm-8">
+				      <input type="text" class="form-control" id="doc" th:field="*{doc}" required>
+				    </div>
+				  </div>
+				  <div class="mb-3 row col-sm-4">
+				    <label for="name" class="col-sm-4 col-form-label">Nombre: </label>
+				    <div class="col-sm-8">
+				      <input type="text" class="form-control" id="name" th:field="*{name}" required>
+				    </div>
+				  </div>
+				  <div class="mb-3 row col-sm-4">
+				    <label for="name" class="col-sm-4 col-form-label">Mesa: </label>
+				    <div class="col-sm-8">
+				      <input type="number" class="form-control" id="name" th:field="*{tablenum}" required>
+				    </div>
+				  </div>
+			  	</div>
+			  	<div class="mt-4 row">
+				  <div class="mb-3 row col-sm-3">
+					    <select class="form-select col-sm-12"  th:field="*{product_id}">
+							<option  th:value="0">Seleccionar producto</option>
+					        <option th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"></option>
+					    </select>
+				  </div>
+				  <div class="mb-3 mx-3 row col-sm-3">
+				     <button name="adddetail" type="submit" class="btn btn-primary col-sm-12 text-sm" style="width: 100%;">Añadir producto</button>
+				  </div>
+				</div>
+				<table class="table table-bordered mt-4" id="dataTable" width="100%" cellspacing="0">
+				  <thead>
+				    <tr>
+				      <th>Producto</th>
+				      <th>Precio</th>
+				      <th>Cantidad</th>
+				      <th>Total</th>
+				      <th></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr th:each="detail,detStat : *{purchasedetail}">
+				      <input type="hidden" th:field="*{purchasedetail[__${detStat.index}__].name}"/>
+				      <input type="hidden" th:field="*{purchasedetail[__${detStat.index}__].product_id}"/>
+				      <td th:text="*{purchasedetail[__${detStat.index}__].name}" >
+				        
+				      </td>
+				      <td>
+				        <input type="number" th:field="*{purchasedetail[__${detStat.index}__].price}" onchange="updateTotal(this)" th:id="price-row"/>
+				      </td>
+				      <td>
+				        <input type="number" th:field="*{purchasedetail[__${detStat.index}__].quantity}" onchange="updateTotal(this)" th:id="quantity-row"/>
+				      </td>
+				      <td th:text="${detail.price * detail.quantity}" th:id="total-row">
+				      </td>
+				      <td>
+				     	<button name="deletedetail" th:value="${detStat.index}" type="submit" class="btn btn-danger col-sm-12 text-xs" style="width: 100%;">Eliminar</button>
+					  </td>
+				    </tr>
+				  </tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+	
+		 <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin-2.min.js"></script>
+    <script th:inline="javascript">
+		console.log(/*[[${porder}]]*/ "");
+	  function updateTotal(input) {
+	    var row = input.parentElement.parentElement;
+	    var priceInput = row.querySelector("#price-row");
+	    var quantityInput = row.querySelector("#quantity-row");
+	    var totalCell = row.querySelector("td#total-row");
+		
+		console.log(totalCell);
+		
+	    var price = parseFloat(priceInput.value) || 0;
+	    var quantity = parseFloat(quantityInput.value) || 0;
+	    var total = price * quantity;
+	
+	    totalCell.textContent = total.toFixed(2); // Format to two decimal places
+	  }
+	</script>
+</body>
+
+</html>
