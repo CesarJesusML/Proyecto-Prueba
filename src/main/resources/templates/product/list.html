@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+    <!-- Incluir estilos comunes de FontAwesome y fuentes -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Incluir estilos comunes de SB Admin 2 -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Incluir estilos de Bootstrap -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Incluir SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Incluir el menú desde el layout base -->
+    <div th:replace="../fragments/menu :: menu(~{ :: #content})">
+        <div id="content" class="container-fluid">
+            <!-- Contenido específico de esta página -->
+            <h1 class="h3 mb-4 text-gray-800">Lista de Productos</h1>
+            <a class="btn btn-primary mb-3" th:href="@{/products/new}">Nuevo Producto</a>
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center" id="dataTable" width="100%" cellspacing="0">
+						    <thead>
+						        <tr>
+						            <th style="width: 10%;">ID</th>
+						            <th style="width: 30%;">Nombre</th>
+						            <th style="width: 20%;">Precio</th>
+						            <th style="width: 20%;">SKU</th>
+						            <th style="width: 20%;" class="table-actions">Acciones</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						        <!-- Iteración sobre la lista de productos -->
+						        <tr th:each="product : ${products}">
+						            <td th:text="${product.id}"></td>
+						            <td th:text="${product.name}"></td>
+						            <td th:text="${product.price}"></td>
+						            <td th:text="${product.sku}"></td>
+						            <td class="table-actions">
+						                <!-- Enlaces para editar y eliminar cada producto -->
+						                <a class="btn btn-sm btn-info" th:href="@{/products/edit/{id}(id=${product.id})}">Editar</a>
+						                <button class="btn btn-sm btn-danger" th:attr="onclick='eliminarProducto(\'' + ${product.id} + '\')'">Eliminar</button>
+						            </td>
+						        </tr>
+						    </tbody>
+						</table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Script para SweetAlert y otros scripts comunes -->
+    <script th:inline="javascript">
+        function eliminarProducto(productId) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¡No podrás revertir esto!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redireccionar para eliminar el producto
+                    window.location.href = '/products/delete/' + productId;
+                }
+            });
+        }
+    </script>
+    
+    <!-- Incluir scripts comunes desde el layout base -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+</body>
+</html>

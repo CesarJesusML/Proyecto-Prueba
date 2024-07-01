@@ -41,6 +41,7 @@ public class WebSecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests( (requests)->requests
+				.requestMatchers("/api/**").permitAll()
 				.requestMatchers("/", "/js/**", "/css/**").permitAll()
 				.requestMatchers("/login*").permitAll()
 				.anyRequest().authenticated()
