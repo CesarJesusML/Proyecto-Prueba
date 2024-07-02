@@ -49,6 +49,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/", "/js/**", "/css/**").permitAll()
 				.requestMatchers("/login*").permitAll()
 				.requestMatchers("/porder/**", "/api/**").permitAll()
+				.requestMatchers("/crear-reserva*").permitAll()
 				.anyRequest().authenticated()
 				)
 				.formLogin((form) -> form
