@@ -14,4 +14,5 @@ public interface ProductService {
 	Product update(Product product);
 	
 	void delete(Product product);
+
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import com.cibertec.gestrestaurante.model.Booking;
 
 public interface BookingService {
-
 	Booking create(Booking booking);
 	
 	List<Booking> getAll();
@@ -13,4 +12,6 @@ public interface BookingService {
 	Booking update(Booking booking);
 	
 	void delete(Booking booking);
+
+	Booking getById(Long id);
 }

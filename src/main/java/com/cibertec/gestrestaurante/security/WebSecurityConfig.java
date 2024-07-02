@@ -2,13 +2,17 @@ package com.cibertec.gestrestaurante.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 
@@ -33,8 +37,9 @@ public class WebSecurityConfig {
         return authProvider;
     }
     
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth, WebSecurity web) throws Exception {
         auth.authenticationProvider(authenticationProvider());
+        
     }
 
 	@Bean
@@ -43,7 +48,7 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests( (requests)->requests
 				.requestMatchers("/", "/js/**", "/css/**").permitAll()
 				.requestMatchers("/login*").permitAll()
-				.requestMatchers("/porder/**").permitAll()
+				.requestMatchers("/porder/**", "/api/**").permitAll()
 				.anyRequest().authenticated()
 				)
 				.formLogin((form) -> form
@@ -61,4 +66,6 @@ public class WebSecurityConfig {
                         .deleteCookies("JSESSIONID"));
 		return http.build();
 	}
+	
+
 }

@@ -11,5 +11,7 @@ public interface PurchaseOrderService {
 	
 	PurchaseOrder update(PurchaseOrder porder);
 	
-	void delete(PurchaseOrder porder);
+	void delete(Long id);
+	
+	PurchaseOrder getById(Long id);
 }

@@ -1,6 +1,7 @@
 package com.cibertec.gestrestaurante.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,27 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	}
 
 	@Override
-	public void delete(PurchaseOrder porder) {
-		porderRepository.delete(porder);
+	public void delete(Long id) {
+		Optional<PurchaseOrder> porderop = porderRepository.findById(id);
+				
+		if (!porderop.isEmpty()) {
+			PurchaseOrder porder = porderop.get();
+			
+			porderRepository.delete(porder);
+	    } 
+	}
+
+	@Override
+	public PurchaseOrder getById(Long id) {
+		Optional<PurchaseOrder> porderop = porderRepository.findById(id);
+		PurchaseOrder porder = new PurchaseOrder();
+		
+		if (!porderop.isEmpty()) {
+			porder = porderop.get();
+			
+	    } 
+		
+		return porder;
 	}
 
 }

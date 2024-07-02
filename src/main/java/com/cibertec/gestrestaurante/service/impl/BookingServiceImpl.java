@@ -1,6 +1,7 @@
-package com.cibertec.gestrestaurante.service.impl;
+	package com.cibertec.gestrestaurante.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,12 @@ public class BookingServiceImpl implements BookingService {
 	BookingRepository bookingRepository;
 	
 	public Booking create(Booking booking) {
-		return bookingRepository.save(booking);
+		Booking bookingcreated = new Booking();
+		try {
+			bookingcreated = bookingRepository.save(booking);
+		} catch(Exception e) {
+		}
+		return bookingcreated;
 	} 
 
 	@Override
@@ -26,12 +32,25 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public Booking update(Booking booking) {
-		return null;
+		return bookingRepository.save(booking);
 	}
 
 	@Override
 	public void delete(Booking booking) {
 		bookingRepository.delete(booking);
+	}
+
+	@Override
+	public Booking getById(Long id) {
+		Optional<Booking> bookingp = bookingRepository.findById(id);
+		
+		Booking booking = new Booking();
+		if (!bookingp.isEmpty()) {
+			booking = bookingp.get();
+			
+	    }
+		
+		return booking;
 	}
 
 }
